@@ -27,11 +27,11 @@ jobs:
 
       - name: Build da imagem
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/nginx-app:latest .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/nginx-app:${{ github.sha }} .
 
       - name: Push da imagem
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/nginx-app:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/nginx-app:${{ github.sha }}
 
       - name: Atualizar kubeconfig
         run: |
@@ -39,4 +39,4 @@ jobs:
 
       - name: Deploy no Kubernetes
         run: |
-          kubectl set image deployment/nginx nginx=${{ secrets.DOCKER_USERNAME }}/nginx-app:latest
+          kubectl set image deployment/nginx nginx=${{ secrets.DOCKER_USERNAME }}/nginx-app:${{ github.sha }}
