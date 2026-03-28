@@ -37,6 +37,11 @@ jobs:
         run: |
           aws eks update-kubeconfig --name rayne-eks --region us-east-1
 
-      - name: Deploy no Kubernetes
+      - name: Deploy com manifest
         run: |
-          kubectl set image deployment/nginx nginx=${{ secrets.DOCKER_USERNAME }}/nginx-app:${{ github.sha }}
+          sed -i 's|IMAGE_PLACEHOLDER|${{ secrets.DOCKER_USERNAME }}/nginx-app:${{ github.sha }}|g' k8s/deployment.yaml
+          kubectl apply -f k8s/
+
+      - name: Verificar rollout
+        run: |
+          kubectl rollout status deployment/nginx    
