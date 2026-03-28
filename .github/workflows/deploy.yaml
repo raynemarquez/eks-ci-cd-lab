@@ -37,11 +37,16 @@ jobs:
         run: |
           aws eks update-kubeconfig --name rayne-eks --region us-east-1
 
-      - name: Deploy com manifest
+      - name: Instalar Helm
         run: |
-          sed -i 's|IMAGE_PLACEHOLDER|${{ secrets.DOCKER_USERNAME }}/nginx-app:${{ github.sha }}|g' k8s/deployment.yaml
-          kubectl apply -f k8s/
+          curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+      - name: Deploy com Helm
+        run: |
+          helm upgrade --install nginx ./nginx-chart \
+            --set image.repository=${{ secrets.DOCKER_USERNAME }}/nginx-app \
+            --set image.tag=${{ github.sha }}
 
       - name: Verificar rollout
         run: |
-          kubectl rollout status deployment/nginx    
+          kubectl rollout status deployment/nginx
