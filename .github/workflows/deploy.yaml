@@ -19,7 +19,6 @@ build:
 name: Build and Push Image
 runs-on: ubuntu-latest
 
-```
 outputs:
   image_tag: ${{ github.sha }}
 
@@ -40,14 +39,14 @@ steps:
   - name: Push da imagem
     run: |
       docker push ${{ secrets.DOCKER_USERNAME }}/nginx-app:${{ github.sha }}
-```
+
 
 deploy:
 name: Deploy no EKS
 runs-on: ubuntu-latest
 needs: build
 
-```
+
 steps:
   - name: Checkout
     uses: actions/checkout@v3
@@ -76,4 +75,4 @@ steps:
   - name: Verificar rollout
     run: |
       kubectl rollout status deployment/$APP_NAME -n namespace-teste
-```
+

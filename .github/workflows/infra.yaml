@@ -12,7 +12,6 @@ jobs:
 terraform:
 runs-on: ubuntu-latest
 
-```
 defaults:
   run:
     working-directory: infra/terraform-eks/envs/dev
@@ -39,4 +38,3 @@ steps:
 
   - name: Apply
     run: terraform apply -auto-approve
-```
