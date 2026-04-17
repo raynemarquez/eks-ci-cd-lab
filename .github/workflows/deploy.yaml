@@ -43,10 +43,10 @@ jobs:
 
       - name: Deploy com Helm
         run: |
-          helm upgrade --install nginx ./nginx-chart \
+          helm upgrade --install app-teste ./nginx-chart \
             --set image.repository=${{ secrets.DOCKER_USERNAME }}/nginx-app \
             --set image.tag=${{ github.sha }}
 
       - name: Verificar rollout
         run: |
-          kubectl rollout status deployment/nginx
+          kubectl rollout status deployment/app-teste -n namespace-teste

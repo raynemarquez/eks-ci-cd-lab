@@ -1,0 +1,13 @@
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+crash.log
+
+# AWS / kube
+*.pem
+kubeconfig
+
+# OS
+.DS_Store
+Thumbs.db

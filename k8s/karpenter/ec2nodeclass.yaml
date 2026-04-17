@@ -1,0 +1,18 @@
+apiVersion: karpenter.k8s.aws/v1
+kind: EC2NodeClass
+metadata:
+  name: default
+spec:
+  amiFamily: AL2
+
+  amiSelectorTerms:
+    - id: ami-098e39bafa7e7303d
+
+  role: rayne-eks-node-group-role
+
+  subnetSelectorTerms:
+    - id: subnet-03be7f4c1b8f031b7
+    - id: subnet-0a109d594e392621e
+  
+  securityGroupSelectorTerms:
+    - id: sg-0e810ee30b66a74ea
